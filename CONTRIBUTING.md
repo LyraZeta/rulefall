@@ -14,7 +14,7 @@ Thank you for helping make coding-agent instruction behavior easier to inspect. 
 
 Requirements:
 
-- Node.js 20.19 or newer in the Node 20 line, or Node.js 22.12 or newer
+- Node.js 22.13 or newer
 - Corepack and the pnpm version declared in `package.json`
 
 ```bash

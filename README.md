@@ -72,7 +72,7 @@ Production check:
 pnpm check
 ```
 
-Rulefall requires Node.js 20.19 or newer in the Node 20 line, or Node.js 22.12 or newer.
+Rulefall requires Node.js 22.13 or newer for local development.
 
 ## Reading The Waterfall
 

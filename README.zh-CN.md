@@ -60,7 +60,7 @@ pnpm dev
 pnpm check
 ```
 
-本地开发需要 Node.js 20.19 或更高的 Node 20 版本，或 Node.js 22.12 及以上版本。
+本地开发需要 Node.js 22.13 或更高版本。
 
 ## 如何理解结果
 
