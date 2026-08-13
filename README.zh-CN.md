@@ -40,7 +40,7 @@
 
 ## 快速开始
 
-[在线模拟器](https://lyrazeta.github.io/rulefall/)计划通过 GitHub Pages 发布；现在可在本地运行：
+直接使用[在线模拟器](https://lyrazeta.github.io/rulefall/)，或在本地运行：
 
 ```bash
 git clone https://github.com/LyraZeta/rulefall.git

@@ -5,7 +5,7 @@
   <p><strong>See which instructions reach your coding agent, when, and why.</strong></p>
 
   <p>
-    <a href="https://lyrazeta.github.io/rulefall/"><strong>Planned online simulator</strong></a>
+    <a href="https://lyrazeta.github.io/rulefall/"><strong>Try the online simulator</strong></a>
     · <a href="#quick-start">Run locally</a>
     · <a href="docs/SEMANTICS.md">Semantics</a>
     · <a href="README.zh-CN.md">简体中文</a>
@@ -52,7 +52,7 @@ That makes otherwise silent portability gaps visible before a session surprises 
 
 ## Quick Start
 
-The [online simulator](https://lyrazeta.github.io/rulefall/) is planned for GitHub Pages. Run it locally now:
+Try the [online simulator](https://lyrazeta.github.io/rulefall/), or run it locally:
 
 ```bash
 git clone https://github.com/LyraZeta/rulefall.git

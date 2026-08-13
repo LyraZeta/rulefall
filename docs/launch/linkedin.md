@@ -12,7 +12,7 @@ The app runs locally in the browser. There is no repository upload, backend, tel
 
 Rulefall does not reconstruct private prompts or prove that a model followed an instruction. Its job is narrower: make documented delivery mechanics visible enough to test, discuss, and correct.
 
-Planned online simulator: <https://lyrazeta.github.io/rulefall/>
+Online simulator: <https://lyrazeta.github.io/rulefall/>
 
 Source: <https://github.com/LyraZeta/rulefall>
 

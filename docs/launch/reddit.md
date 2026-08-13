@@ -20,7 +20,7 @@ Everything runs locally in the browser: no repository upload, backend, telemetry
 
 It is deliberately not another inventory/linter. It simulates documented delivery semantics, labels uncertainty, and cannot prove instruction compliance or inspect hidden prompts.
 
-Planned online simulator: <https://lyrazeta.github.io/rulefall/>
+Online simulator: <https://lyrazeta.github.io/rulefall/>
 
 Source: <https://github.com/LyraZeta/rulefall>
 
