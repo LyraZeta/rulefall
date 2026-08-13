@@ -1,0 +1,77 @@
+name: Bug report
+description: Report a reproducible problem in the Rulefall application.
+title: "[Bug]: "
+labels: [bug, triage]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug. Remove private paths, repository content, and secrets from examples and screenshots.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: Describe the actual behavior and what you expected instead.
+      placeholder: When I select ..., Rulefall ...; I expected ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: List exact steps or link a small public fixture. Do not link a private repository.
+      placeholder: |
+        1. Open the built-in demo
+        2. Select ...
+        3. Move the lifecycle to ...
+    validations:
+      required: true
+
+  - type: input
+    id: deployment
+    attributes:
+      label: Deployment or commit
+      description: Live site, local development, release, or commit SHA.
+      placeholder: v0.1.0 or commit abc1234
+    validations:
+      required: true
+
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and operating system
+      placeholder: Chrome 140 on Windows 11
+    validations:
+      required: true
+
+  - type: dropdown
+    id: input
+    attributes:
+      label: Workspace input
+      options:
+        - Built-in demo
+        - Open folder
+        - Import ZIP
+        - Not applicable
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Add sanitized logs or screenshots. Drag files here only after checking them for private data.
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I searched existing issues for this problem.
+          required: true
+        - label: I removed secrets and private repository content from this report.
+          required: true
+        - label: This is not a security vulnerability.
+          required: true

@@ -1,0 +1,27 @@
+name: Documentation correction
+description: Report unclear, outdated, or incorrect Rulefall documentation.
+title: "[Docs]: "
+labels: [documentation, triage]
+body:
+  - type: input
+    id: location
+    attributes:
+      label: Page or section
+      placeholder: README support matrix / Cursor row
+    validations:
+      required: true
+
+  - type: textarea
+    id: issue
+    attributes:
+      label: What should change?
+      description: Quote only the minimum text needed, then explain the correction.
+    validations:
+      required: true
+
+  - type: input
+    id: source
+    attributes:
+      label: Supporting source
+      description: Prefer current official documentation for provider claims.
+      placeholder: https://...

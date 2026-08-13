@@ -1,0 +1,85 @@
+name: Provider semantic gap
+description: Report a difference between Rulefall's simulation and current coding-agent behavior or documentation.
+title: "[Semantics]: "
+labels: [semantics, triage]
+body:
+  - type: dropdown
+    id: provider
+    attributes:
+      label: Provider
+      options:
+        - OpenAI Codex
+        - Claude Code
+        - Cursor
+        - GitHub Copilot
+        - Cross-provider
+    validations:
+      required: true
+
+  - type: input
+    id: surface
+    attributes:
+      label: Product surface and version
+      description: Include CLI/editor/web surface and version or build when visible.
+      placeholder: Codex CLI x.y.z on macOS
+    validations:
+      required: true
+
+  - type: input
+    id: source
+    attributes:
+      label: Official documentation
+      description: Link the most specific current official page, if one exists.
+      placeholder: https://...
+
+  - type: textarea
+    id: fixture
+    attributes:
+      label: Minimal repository fixture
+      description: Show sanitized paths and instruction contents needed to reproduce the difference.
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: state
+    attributes:
+      label: Simulated state
+      description: Provide working directory, target path, lifecycle phase, Rulefall result, and expected result.
+      placeholder: |
+        cwd:
+        target:
+        phase:
+        Rulefall says:
+        Expected:
+    validations:
+      required: true
+
+  - type: textarea
+    id: observation
+    attributes:
+      label: Reproducible observation
+      description: If this is based on product behavior, include exact steps, settings, date observed, and repeated results. Do not paste private prompts or secrets.
+
+  - type: dropdown
+    id: evidence_kind
+    attributes:
+      label: Evidence type
+      options:
+        - Official documentation
+        - Reproducible product observation
+        - Both
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I used a minimal, sanitized fixture with no private repository data.
+          required: true
+        - label: I understand a single model response does not prove prompt assembly.
+          required: true
+        - label: I searched existing semantic gap reports.
+          required: true
