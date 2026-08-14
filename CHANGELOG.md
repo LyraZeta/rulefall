@@ -11,7 +11,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 - Versioned semantic fixtures and richer frontmatter/glob evaluation.
 - Machine-readable trace export.
 
-## [0.1.0] - 2026-08-13
+## [0.1.0] - 2026-08-14
 
 ### Added
 
