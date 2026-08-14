@@ -1,11 +1,11 @@
 <div align="center">
   <img src="public/logo.svg" alt="Rulefall" width="520">
 
-  <h3>Your coding agents do not read the same repo.</h3>
-  <p><strong>See which instructions reach your coding agent, when, and why.</strong></p>
+  <h3>See which repository rules each coding agent will load or ignore.</h3>
+  <p><strong>Import a repo, choose a file, and compare Codex, Claude Code, Cursor, and GitHub Copilot.</strong></p>
 
   <p>
-    <a href="https://lyrazeta.github.io/rulefall/"><strong>Try the online simulator</strong></a>
+    <a href="https://lyrazeta.github.io/rulefall/"><strong>Try Rulefall online</strong></a>
     · <a href="#quick-start">Run locally</a>
     · <a href="docs/SEMANTICS.md">Semantics</a>
     · <a href="README.zh-CN.md">简体中文</a>
@@ -18,27 +18,60 @@
   </p>
 </div>
 
-<img src="public/demo.gif" alt="Rulefall comparing instruction resolution across Codex, Claude Code, Cursor, and GitHub Copilot as the lifecycle moves from startup to discovery to edit">
+Rulefall answers one practical question:
 
-An `AGENTS.md` at the repository root, a nested `CLAUDE.md`, a Cursor rule with a glob, and a Copilot path instruction may all look like “repo context.” They are not discovered at the same time, scoped the same way, or interpreted by the same agent.
+> **When an AI coding agent is about to edit a file, which repository instructions is it expected to receive, and which ones will it miss?**
 
-**Rulefall is an interactive lifecycle conformance simulator.** Give it a local folder or ZIP, choose a working directory and target file, then scrub from startup to discovery to edit. Rulefall shows a side-by-side waterfall for Codex, Claude Code, Cursor, and GitHub Copilot, including the source, action, timing, confidence, and reason for every instruction event.
+A repository can contain `AGENTS.md`, `CLAUDE.md`, Cursor rules, and Copilot instructions at the same time. Those files are not interchangeable: each agent discovers them at different moments, applies different path and precedence rules, and may ignore the other agents' formats.
+
+**Rulefall is a local, interactive debugger for those repository instructions.** It simulates the documented loading behavior of Codex, Claude Code, Cursor, and GitHub Copilot, then explains every result. Think of it as DevTools for the rules that guide your coding agents.
 
 No repository upload. No model call. No agent installation.
 
-## Why Rulefall?
+<img src="public/demo.gif" alt="Rulefall comparing which repository instructions Codex, Claude Code, Cursor, and GitHub Copilot receive before editing a selected file">
 
-Most instruction tooling answers one of these questions:
+## A 30-Second Example
 
-- What agent-related files exist in this repository?
-- Is this configuration well formed?
-- Which `AGENTS.md` files are ancestors of this path?
+Suppose a repository contains:
 
-Rulefall asks a different one:
+```text
+AGENTS.md
+CLAUDE.md
+.cursor/rules/payments.mdc                 # applies to src/payments/**/*.ts
+.github/copilot-instructions.md
+.github/instructions/docs.instructions.md  # applies only to docs/**/*.md
+src/payments/CLAUDE.md
+src/payments/refund.ts
+```
 
-> **At this point in the agent lifecycle, for this working directory and target file, what reaches each agent—and what does not?**
+Choose `.` as the working directory, select `src/payments/refund.ts` as the target, and move to the `edit` phase. Rulefall makes the difference visible:
 
-That makes otherwise silent portability gaps visible before a session surprises you.
+| Agent | Simulated result |
+| --- | --- |
+| **Codex** | Loads the applicable `AGENTS.md` instruction chain. |
+| **Claude Code** | Loads project memory and adds the nested `CLAUDE.md` when it works with the target. |
+| **Cursor** | Applies `payments.mdc` because its glob matches the target. |
+| **GitHub Copilot** | Loads the repository-wide instruction; the docs-only instruction does not match this file. |
+
+The same repository and target therefore produce different instruction contexts. Without Rulefall, teams often discover that difference only after two agents make inconsistent edits.
+
+## When Rulefall Helps
+
+- A rule is present in the repository, but one coding agent appears not to use it.
+- A team switches between Codex, Claude Code, Cursor, and Copilot.
+- A monorepo has nested or path-specific instructions that are hard to reason about.
+- You are migrating agent configuration and want to find silent portability gaps first.
+
+If you use only one agent and your repository has no agent instruction files, Rulefall probably is not useful to you.
+
+## How It Works
+
+1. Import a local folder or ZIP, or use the built-in example.
+2. Choose the working directory and the file an agent is about to edit.
+3. Move through `startup`, `discovery`, and `edit`.
+4. Compare the four agents and open any event to see the reason and confidence level.
+
+The waterfall marks each source as `loaded`, `deferred`, `ignored`, `shadowed`, or `truncated`. These are documented-behavior simulations, not captured private prompts and not proof that a model followed an instruction.
 
 ## What You Get
 

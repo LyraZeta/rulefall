@@ -1,32 +1,71 @@
 <div align="center">
   <img src="public/logo.svg" alt="Rulefall" width="520">
 
-  <h3>你的编程代理，读到的并不是同一个仓库。</h3>
-  <p><strong>看清哪些指令会在何时、因何原因到达你的编程代理。</strong></p>
+  <h3>看清每个 AI 编程助手会加载或忽略哪些仓库规则。</h3>
+  <p><strong>导入仓库，选择一个文件，对比 Codex、Claude Code、Cursor 和 GitHub Copilot。</strong></p>
 
   <p>
-    <a href="https://lyrazeta.github.io/rulefall/"><strong>计划中的在线模拟器</strong></a>
+    <a href="https://lyrazeta.github.io/rulefall/"><strong>在线体验 Rulefall</strong></a>
     · <a href="#快速开始">本地运行</a>
     · <a href="docs/SEMANTICS.md">语义说明</a>
     · <a href="README.md">English</a>
   </p>
 </div>
 
-<img src="public/demo.gif" alt="Rulefall 随生命周期从启动、发现推进到编辑，对比 Codex、Claude Code、Cursor 与 GitHub Copilot 的指令解析">
+Rulefall 只回答一个具体问题：
 
-仓库根目录的 `AGENTS.md`、子目录里的 `CLAUDE.md`、带 glob 的 Cursor rule，以及 Copilot 的路径指令，看起来都像“仓库上下文”。但不同代理发现它们的时间、作用域和处理方式并不相同。
+> **当 AI 编程助手准备修改一个文件时，它预计会收到仓库里的哪些规则，又会错过哪些规则？**
 
-**Rulefall 是一个交互式生命周期一致性模拟器。** 导入本地目录或 ZIP，选择工作目录和目标文件，再从启动、发现一路拖动到编辑阶段。Rulefall 会并排展示 Codex、Claude Code、Cursor 和 GitHub Copilot 的指令瀑布流，并解释每个来源何时被加载、延迟、忽略、遮蔽或截断。
+同一个仓库可能同时存在 `AGENTS.md`、`CLAUDE.md`、Cursor rules 和 Copilot instructions。它们并不是同一份配置的不同名字：每个工具发现规则的时机、路径范围和优先级都不同，也可能完全忽略其他工具的格式。
+
+**Rulefall 是这些仓库规则的本地交互式调试器。** 它模拟 Codex、Claude Code、Cursor 和 GitHub Copilot 文档中公开的加载行为，并解释每一个结果。你可以把它理解成 AI 编程助手仓库规则的 DevTools。
 
 无需上传仓库，无需调用模型 API，也无需安装任何编程代理。
 
-## 为什么需要 Rulefall
+<img src="public/demo.gif" alt="Rulefall 对比 Codex、Claude Code、Cursor 与 GitHub Copilot 在修改所选文件前分别会收到哪些仓库规则">
 
-现有工具通常回答：仓库里有哪些代理配置文件、配置是否合法、某条路径继承了哪些 `AGENTS.md`。Rulefall 则回答一个不同的问题：
+## 30 秒看懂 Rulefall
 
-> **对于当前生命周期阶段、工作目录和目标文件，每个代理究竟会收到什么，又错过什么？**
+假设仓库里有这些文件：
 
-它适合在真实会话出现意外之前，发现跨代理迁移中的静默差异。
+```text
+AGENTS.md
+CLAUDE.md
+.cursor/rules/payments.mdc                 # 适用于 src/payments/**/*.ts
+.github/copilot-instructions.md
+.github/instructions/docs.instructions.md  # 只适用于 docs/**/*.md
+src/payments/CLAUDE.md
+src/payments/refund.ts
+```
+
+选择 `.` 作为工作目录、`src/payments/refund.ts` 作为目标文件，再切换到 `edit` 阶段，Rulefall 会把差异直接列出来：
+
+| 代理 | 模拟结果 |
+| --- | --- |
+| **Codex** | 加载当前路径适用的 `AGENTS.md` 指令链。 |
+| **Claude Code** | 加载根目录项目规则，并在处理目标文件时加入嵌套的 `CLAUDE.md`。 |
+| **Cursor** | `payments.mdc` 的路径模式命中目标文件，因此该规则生效。 |
+| **GitHub Copilot** | 加载仓库级指令；只面向文档的路径指令不匹配当前文件。 |
+
+因此，同一个仓库、同一个目标文件，四种工具会得到不同的指令上下文。没有 Rulefall 时，团队往往要等到两个代理做出不一致的修改后，才会发现这个差异。
+
+## 什么时候需要它
+
+- 规则明明写在仓库里，某个 AI 编程助手却像是没有使用。
+- 团队同时使用 Codex、Claude Code、Cursor 和 Copilot。
+- monorepo 中存在多层或按路径生效的规则，很难判断作用范围。
+- 正在迁移代理配置，希望提前发现不会自动兼容的规则。
+
+如果你只使用一种代理，而且仓库里没有代理指令文件，Rulefall 大概率对你没有帮助。
+
+## 它如何工作
+
+1. 导入本地目录或 ZIP，也可以直接使用内置示例。
+2. 选择工作目录，以及代理准备修改的目标文件。
+3. 从 `startup`、`discovery` 推进到 `edit`。
+4. 并排比较四种代理，点击任意事件查看原因和置信度。
+
+瀑布流会把每个来源标记为 `loaded`、`deferred`、`ignored`、`shadowed` 或 `truncated`。这些结果是对公开文档行为的模拟，不是截获的真实私有 prompt，也不能证明模型最终遵从了某条规则。
 
 ## 主要能力
 
