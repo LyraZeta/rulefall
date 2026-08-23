@@ -31,15 +31,15 @@
     "check": "pnpm lint && pnpm test && pnpm build"
   },
   "dependencies": {
-    "@vitejs/plugin-react": "^6.0.5",
+    "@vitejs/plugin-react": "^6.1.0",
     "html-to-image": "^1.11.13",
     "jszip": "^3.10.1",
-    "lucide-react": "^1.31.0",
+    "lucide-react": "^1.33.0",
     "picomatch": "^4.0.5",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "vite": "^8.2.1",
-    "zustand": "^5.0.14"
+    "vite": "^8.2.2",
+    "zustand": "^5.0.15"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
